@@ -9,22 +9,22 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Ввод количества людей >1
-        int n = 0;
+        int PersonsCount = 0;
         boolean errorPersonsCount = true;
 
         do {
             System.out.println("На скольких человек необходимо разделить счёт?");
             try {
-                n = scanner.nextInt();
+                PersonsCount = scanner.nextInt();
             } catch (Exception e) {
             }
 
  /*         альтернативная обработки ошибочного ввода
             if (scanner.hasNextInt()){
-                n = scanner.nextInt();
+                PersonsCount = scanner.nextInt();
             } else scanner.nextLine();
 */
-            if (n > 1) {
+            if (PersonsCount > 1) {
                 errorPersonsCount = false;
             } else
                 System.out.println("Ошибка: некорректное значение для подсчёта.");
@@ -34,13 +34,13 @@ public class Main {
         while (errorPersonsCount);
 
         // Добавление товаров в калькулятор
-        String tovarName = "";
-        float tovarPrice = -1;
+        String tovarName;
+        float tovarPrice;
         boolean notEndTovars = true;
-        Tovar tovar1 = new Tovar();
+
         Calc calc1 = new Calc();
 
-        do {
+        do {Tovar tovar1 = new Tovar();
             System.out.print("Введите название товара: ");
             tovarName = scanner.nextLine();
             tovar1.name = tovarName;
@@ -63,6 +63,7 @@ public class Main {
                     //Цену товара ввели, добавляем товар в калькулятор
                     calc1.addTovar(tovar1);
                     System.out.println("Товар " + tovar1.name + " успешно добавлен");
+                    tovar1 = null;
                 } else System.out.println("Ошибка: некорректная стоимость.");
 
             } while (errorInPrice);
@@ -79,7 +80,8 @@ public class Main {
         System.out.println("Добавленные товары:");
         System.out.println(calc1.allTovars);
         System.out.println("Каждый человек должен заплатить: " +
-                String.format("%.2f", calc1.totalPrice / n) + " " + floatToRubles(calc1.totalPrice / n));
+                String.format("%.2f", calc1.totalPrice / PersonsCount) +
+                " " + floatToRubles(calc1.totalPrice / PersonsCount));
         scanner.close();
     } //конец main
 
